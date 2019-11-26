@@ -15,28 +15,15 @@ namespace CM.Email
     /// This client provides all endpoint methods to communicate with the EmailCampaigns API
     /// </summary>
     [PublicAPI]
-    public class EmailClient
+    public class EmailClient : BaseClient
     {
-        private const string apiKeyHeader = "X-CM-PRODUCTTOKEN";
-        private const string jsonMediaType = "application/json";
-        private readonly Encoding encoding = Encoding.UTF8;
-
-        private readonly HttpClient _httpClient;
-        private readonly Guid _apiKey;
-        private readonly string _baseUrl;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="EmailClient" /> class
         /// </summary>
         /// <param name="httpClient">The HttpClient to use for sending the instruction. You should use this as a singleton for your entire application</param>
         /// <param name="apiKey">Your Product token, used for authentication (Found in the EmailCampaigns app in the "API credentials" page in Settings</param>
         /// <param name="baseUrl">The base URL of the CM Email Campaigns API (Optional)</param>
-        public EmailClient(HttpClient httpClient, Guid apiKey, string baseUrl = "https://api.cmtelecom.com/bulkemail")
-        {
-            _httpClient = httpClient;
-            _apiKey = apiKey;
-            _baseUrl = baseUrl;
-        }
+        public EmailClient(HttpClient httpClient, Guid apiKey, string baseUrl = "https://api.cmtelecom.com") : base(httpClient, apiKey, baseUrl) { }
 
         #region From domains
 
@@ -50,12 +37,12 @@ namespace CM.Email
         /// <returns></returns>
         public async Task<Paginated<FromDomain>> GetFromDomainsAsync(Guid accountID, int? skip = null, int? take = null, CancellationToken cancellationToken = default)
         {
-            QueryStringBuilder query = new QueryStringBuilder($"/v1.0/accounts/{accountID}/fromdomains");
+            QueryStringBuilder query = new QueryStringBuilder($"/bulkemail/v1.0/accounts/{accountID}/fromdomains");
 
             if (skip != default) query.Add("skip", skip);
             if (take != default) query.Add("take", take);
 
-            return await GetPaginatedAsync<FromDomain>(query, cancellationToken);
+            return await GetPaginatedAsync<FromDomain>(query, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -67,7 +54,7 @@ namespace CM.Email
         /// <returns></returns>
         public async Task<FromDomain> GetFromDomainAsync(Guid accountID, Guid fromDomainID, CancellationToken cancellationToken = default)
         {
-            return await GetAsync<FromDomain>($"/v1.0/accounts/{accountID}/fromdomains/{fromDomainID}", cancellationToken);
+            return await GetAsync<FromDomain>($"/bulkemail/v1.0/accounts/{accountID}/fromdomains/{fromDomainID}", cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -79,7 +66,7 @@ namespace CM.Email
         /// <returns></returns>
         public async Task<FromDomain> CreateFromDomainAsync(Guid accountID, FromDomain fromDomain, CancellationToken cancellationToken = default)
         {
-            return await PostAsync<FromDomain>($"/v1.0/accounts/{accountID}/fromdomains", fromDomain, cancellationToken);
+            return await PostAsync<FromDomain>($"/bulkemail/v1.0/accounts/{accountID}/fromdomains", fromDomain, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -91,7 +78,7 @@ namespace CM.Email
         /// <returns></returns>
         public async Task<FromDomain> VerifyFromDomainAsync(Guid accountID, Guid fromDomainID, CancellationToken cancellationToken = default)
         {
-            return await PostAsync<FromDomain>($"/v1.0/accounts/{accountID}/fromdomains/{fromDomainID}/verify", null, cancellationToken);
+            return await PostAsync<FromDomain>($"/bulkemail/v1.0/accounts/{accountID}/fromdomains/{fromDomainID}/verify", null, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -103,7 +90,7 @@ namespace CM.Email
         /// <returns></returns>
         public async Task DeleteFromDomainAsync(Guid accountID, Guid fromDomainID, CancellationToken cancellationToken = default)
         {
-            await DeleteAsync($"/v1.0/accounts/{accountID}/fromdomains/{fromDomainID}", cancellationToken);
+            await DeleteAsync($"/bulkemail/v1.0/accounts/{accountID}/fromdomains/{fromDomainID}", cancellationToken).ConfigureAwait(false);
         }
 
         #endregion
@@ -120,12 +107,12 @@ namespace CM.Email
         /// <returns></returns>
         public async Task<Paginated<FromAddress>> GetFromAddressesAsync(Guid accountID, int? skip = null, int? take = null, CancellationToken cancellationToken = default)
         {
-            QueryStringBuilder query = new QueryStringBuilder($"/v1.0/accounts/{accountID}/fromaddresses");
+            QueryStringBuilder query = new QueryStringBuilder($"/bulkemail/v1.0/accounts/{accountID}/fromaddresses");
 
             if (skip != default) query.Add("skip", skip);
             if (take != default) query.Add("take", take);
 
-            return await GetPaginatedAsync<FromAddress>(query, cancellationToken);
+            return await GetPaginatedAsync<FromAddress>(query, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -137,7 +124,7 @@ namespace CM.Email
         /// <returns></returns>
         public async Task<FromAddress> GetFromAddressAsync(Guid accountID, Guid fromAddressID, CancellationToken cancellationToken = default)
         {
-            return await GetAsync<FromAddress>($"/v1.0/accounts/{accountID}/fromaddresses/{fromAddressID}", cancellationToken);
+            return await GetAsync<FromAddress>($"/bulkemail/v1.0/accounts/{accountID}/fromaddresses/{fromAddressID}", cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -149,7 +136,7 @@ namespace CM.Email
         /// <returns></returns>
         public async Task<FromAddress> CreateFromAddressAsync(Guid accountID, FromAddress fromAddress, CancellationToken cancellationToken = default)
         {
-            return await PostAsync<FromAddress>($"/v1.0/accounts/{accountID}/fromaddresses", fromAddress, cancellationToken);
+            return await PostAsync<FromAddress>($"/bulkemail/v1.0/accounts/{accountID}/fromaddresses", fromAddress, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -162,7 +149,7 @@ namespace CM.Email
         /// <returns></returns>
         public async Task<FromAddress> UpdateFromAddressAsync(Guid accountID, Guid fromAddressID, FromAddress fromAddress, CancellationToken cancellationToken = default)
         {
-            return await PutAsync<FromAddress>($"/v1.0/accounts/{accountID}/fromaddresses/{fromAddressID}", fromAddress, cancellationToken);
+            return await PutAsync<FromAddress>($"/bulkemail/v1.0/accounts/{accountID}/fromaddresses/{fromAddressID}", fromAddress, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -174,7 +161,7 @@ namespace CM.Email
         /// <returns></returns>
         public async Task DeleteFromAddressAsync(Guid accountID, Guid fromAddressID, CancellationToken cancellationToken = default)
         {
-            await DeleteAsync($"/v1.0/accounts/{accountID}/fromaddresses/{fromAddressID}", cancellationToken);
+            await DeleteAsync($"/bulkemail/v1.0/accounts/{accountID}/fromaddresses/{fromAddressID}", cancellationToken).ConfigureAwait(false);
         }
 
         #endregion
@@ -194,7 +181,7 @@ namespace CM.Email
         /// <returns></returns>
         public async Task<Paginated<Template>> GetTemplatesAsync(Guid accountID, int? skip = null, int? take = null, bool? includeHtmlBody = null, bool? includeTextBody = null, bool? includeJson = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            QueryStringBuilder query = new QueryStringBuilder($"/v1.0/accounts/{accountID}/templates");
+            QueryStringBuilder query = new QueryStringBuilder($"/bulkemail/v1.0/accounts/{accountID}/templates");
 
             if (skip != default) query.Add("skip", skip);
             if (take != default) query.Add("take", take);
@@ -203,7 +190,7 @@ namespace CM.Email
             if (includeJson != default) query.Add("includeJson", includeJson);
             if (filter != default) query.Add("filter", filter);
 
-            return await GetPaginatedAsync<Template>(query, cancellationToken);
+            return await GetPaginatedAsync<Template>(query, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -218,13 +205,13 @@ namespace CM.Email
         /// <returns></returns>
         public async Task<Template> GetTemplateAsync(Guid accountID, Guid templateID, bool? includeHtmlBody = null, bool? includeTextBody = null, bool? includeJson = null, CancellationToken cancellationToken = default)
         {
-            QueryStringBuilder query = new QueryStringBuilder($"/v1.0/accounts/{accountID}/templates");
+            QueryStringBuilder query = new QueryStringBuilder($"/bulkemail/v1.0/accounts/{accountID}/templates");
 
             if (includeHtmlBody != default) query.Add("includeHtmlBody", includeHtmlBody);
             if (includeTextBody != default) query.Add("includeTextBody", includeTextBody);
             if (includeJson != default) query.Add("includeJson", includeJson);
 
-            return await GetAsync<Template>($"/v1.0/accounts/{accountID}/templates/{templateID}", cancellationToken);
+            return await GetAsync<Template>($"/bulkemail/v1.0/accounts/{accountID}/templates/{templateID}", cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -236,7 +223,7 @@ namespace CM.Email
         /// <returns></returns>
         public async Task<Template> CreateTemplateAsync(Guid accountID, Template template, CancellationToken cancellationToken = default)
         {
-            return await PostAsync<Template>($"/v1.0/accounts/{accountID}/templates", template, cancellationToken);
+            return await PostAsync<Template>($"/bulkemail/v1.0/accounts/{accountID}/templates", template, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -249,7 +236,7 @@ namespace CM.Email
         /// <returns></returns>
         public async Task<Template> UpdateTemplateAsync(Guid accountID, Guid templateID, Template template, CancellationToken cancellationToken = default)
         {
-            return await PutAsync<Template>($"/v1.0/accounts/{accountID}/templates/{templateID}", template, cancellationToken);
+            return await PutAsync<Template>($"/bulkemail/v1.0/accounts/{accountID}/templates/{templateID}", template, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -261,7 +248,7 @@ namespace CM.Email
         /// <returns></returns>
         public async Task DeleteTemplateAsync(Guid accountID, Guid templateID, CancellationToken cancellationToken = default)
         {
-            await DeleteAsync($"/v1.0/accounts/{accountID}/templates/{templateID}", cancellationToken);
+            await DeleteAsync($"/bulkemail/v1.0/accounts/{accountID}/templates/{templateID}", cancellationToken).ConfigureAwait(false);
         }
 
         #endregion
@@ -278,17 +265,17 @@ namespace CM.Email
         /// <param name="campaignTypeID">This is the ID of the CampaignType that you want filter the campaigns on</param>
         /// <param name="cancellationToken">An optional cancellation token to abort this request</param>
         /// <returns></returns>
-        public async Task<Paginated<Campaign>> GetCampaignsAsync(Guid accountID, string campaignTypeID = null, int? skip = null, int? take = null, string filter = null, string[] campaignTags = null, CancellationToken cancellationToken = default)
+        public async Task<Paginated<Campaign>> GetCampaignsAsync(Guid accountID, int? skip = null, int? take = null, string filter = null, string campaignTypeID = null, string[] campaignTags = null, CancellationToken cancellationToken = default)
         {
-            QueryStringBuilder query = new QueryStringBuilder($"/v1.0/accounts/{accountID}/campaigns");
-
-            if (campaignTypeID != default) query.Add("campaignTypeID", campaignTypeID);
+            QueryStringBuilder query = new QueryStringBuilder($"/bulkemail/v1.0/accounts/{accountID}/campaigns");
+            
             if (skip != default) query.Add("skip", skip);
             if (take != default) query.Add("take", take);
             if (filter != default) query.Add("filter", filter);
+            if (campaignTypeID != default) query.Add("campaignTypeID", campaignTypeID);
             if (campaignTags != default(string[])) query.AddRange("campaignTags", campaignTags);
 
-            return await GetPaginatedAsync<Campaign>(query, cancellationToken);
+            return await GetPaginatedAsync<Campaign>(query, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -300,7 +287,7 @@ namespace CM.Email
         /// <returns></returns>
         public async Task<Campaign> GetCampaignAsync(Guid accountID, Guid campaignID, CancellationToken cancellationToken = default)
         {
-            return await GetAsync<Campaign>($"/v1.0/accounts/{accountID}/campaigns/{campaignID}", cancellationToken);
+            return await GetAsync<Campaign>($"/bulkemail/v1.0/accounts/{accountID}/campaigns/{campaignID}", cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -312,7 +299,7 @@ namespace CM.Email
         /// <returns></returns>
         public async Task<Campaign> CreateCampaignAsync(Guid accountID, Campaign campaign, CancellationToken cancellationToken = default)
         {
-            return await PostAsync<Campaign>($"/v1.0/accounts/{accountID}/campaigns", campaign, cancellationToken);
+            return await PostAsync<Campaign>($"/bulkemail/v1.0/accounts/{accountID}/campaigns", campaign, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -325,7 +312,7 @@ namespace CM.Email
         /// <returns></returns>
         public async Task<Campaign> UpdateCampaignAsync(Guid accountID, Guid campaignID, Campaign campaign, CancellationToken cancellationToken = default)
         {
-            return await PutAsync<Campaign>($"/v1.0/accounts/{accountID}/campaigns/{campaignID}", campaign, cancellationToken);
+            return await PutAsync<Campaign>($"/bulkemail/v1.0/accounts/{accountID}/campaigns/{campaignID}", campaign, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -337,7 +324,7 @@ namespace CM.Email
         /// <returns></returns>
         public async Task DeleteCampaignAsync(Guid accountID, Guid campaignID, CancellationToken cancellationToken = default)
         {
-            await DeleteAsync($"/v1.0/accounts/{accountID}/campaigns/{campaignID}", cancellationToken);
+            await DeleteAsync($"/bulkemail/v1.0/accounts/{accountID}/campaigns/{campaignID}", cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -349,7 +336,7 @@ namespace CM.Email
         /// <returns></returns>
         public async Task<Campaign> CloneCampaignAsync(Guid accountID, Guid campaignID, CancellationToken cancellationToken = default)
         {
-            return await PostAsync<Campaign>($"/v1.0/accounts/{accountID}/campaigns/{campaignID}/clone", null, cancellationToken);
+            return await PostAsync<Campaign>($"/bulkemail/v1.0/accounts/{accountID}/campaigns/{campaignID}/clone", null, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -361,7 +348,7 @@ namespace CM.Email
         /// <returns></returns>
         public async Task<CampaignStatistics> GetCampaignStatisticsAsync(Guid accountID, Guid campaignID, CancellationToken cancellationToken = default)
         {
-            return await GetAsync<CampaignStatistics>($"/v1.0/accounts/{accountID}/campaigns/{campaignID}/statistics", cancellationToken);
+            return await GetAsync<CampaignStatistics>($"/bulkemail/v1.0/accounts/{accountID}/campaigns/{campaignID}/statistics", cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -371,9 +358,9 @@ namespace CM.Email
         /// <param name="campaignID">This is the ID of the Campaign of which you want to retrieve the click statistics</param>
         /// <param name="cancellationToken">An optional cancellation token to abort this request</param>
         /// <returns></returns>
-        public async Task<CampaignClickStatistic[]> GetClickStatisticsAsync(Guid accountID, Guid campaignID, CancellationToken cancellationToken = default)
+        public async Task<CampaignClickStatistic[]> GetCampaignClickStatisticsAsync(Guid accountID, Guid campaignID, CancellationToken cancellationToken = default)
         {
-            return await GetAsync<CampaignClickStatistic[]>($"/v1.0/accounts/{accountID}/campaigns/{campaignID}/statistics/clicks", cancellationToken);
+            return await GetAsync<CampaignClickStatistic[]>($"/bulkemail/v1.0/accounts/{accountID}/campaigns/{campaignID}/statistics/clicks", cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -394,9 +381,9 @@ namespace CM.Email
         /// <param name="includeClickedItems">Whether to include items that are clicked</param>
         /// <param name="cancellationToken">An optional cancellation token to abort this request</param>
         /// <returns></returns>
-        public async Task<Paginated<CampaignStatisticDetail>> GetCampaignStatisticDetails(Guid accountID, Guid campaignID, int? skip = null, int? take = null, string filter = null, bool? includeSentItems = null, bool? includeDeliveredItems = null, bool? includeOpenedItems = null, bool? includeBouncedItem = null, bool? includeComplainedItems = null, bool? includeUnsubscribedItems = null, bool? includeBlacklistedItems = null, bool? includeClickedItems = null, CancellationToken cancellationToken = default)
+        public async Task<Paginated<CampaignStatisticDetail>> GetCampaignStatisticDetailsAsync(Guid accountID, Guid campaignID, int? skip = null, int? take = null, string filter = null, bool? includeSentItems = null, bool? includeDeliveredItems = null, bool? includeOpenedItems = null, bool? includeBouncedItem = null, bool? includeComplainedItems = null, bool? includeUnsubscribedItems = null, bool? includeBlacklistedItems = null, bool? includeClickedItems = null, CancellationToken cancellationToken = default)
         {
-            QueryStringBuilder query = new QueryStringBuilder($"/v1.0/accounts/{accountID}/campaigns/{campaignID}/statistics/details");
+            QueryStringBuilder query = new QueryStringBuilder($"/bulkemail/v1.0/accounts/{accountID}/campaigns/{campaignID}/statistics/details");
 
             if (skip != default) query.Add("skip", skip);
             if (take != default) query.Add("take", take);
@@ -404,13 +391,13 @@ namespace CM.Email
             if (includeSentItems != default) query.Add("includeSentItems", includeSentItems);
             if (includeDeliveredItems != default) query.Add("includeDeliveredItems", includeDeliveredItems);
             if (includeOpenedItems != default) query.Add("includeOpenedItems", includeOpenedItems);
-            if (includeBouncedItem != default) query.Add("includeBouncedItem", includeBouncedItem);
+            if (includeBouncedItem != default) query.Add("includeBouncedItems", includeBouncedItem);
             if (includeComplainedItems != default) query.Add("includeComplainedItems", includeComplainedItems);
             if (includeUnsubscribedItems != default) query.Add("includeUnsubscribedItems", includeUnsubscribedItems);
             if (includeBlacklistedItems != default) query.Add("includeBlacklistedItems", includeBlacklistedItems);
             if (includeClickedItems != default) query.Add("includeClickedItems", includeClickedItems);
 
-            return await GetAsync<Paginated<CampaignStatisticDetail>>(query, cancellationToken);
+            return await GetAsync<Paginated<CampaignStatisticDetail>>(query, cancellationToken).ConfigureAwait(false);
         }
 
         #endregion
@@ -429,13 +416,13 @@ namespace CM.Email
         /// <returns></returns>
         public async Task<Mailing[]> GetMailingsForCampaignAsync(Guid accountID, Guid campaignID, bool? includeTemplateHtmlBody = null, bool? includeTemplateTextBody = null, bool? includeTemplateJson = null, CancellationToken cancellationToken = default)
         {
-            QueryStringBuilder query = new QueryStringBuilder($"/v1.0/accounts/{accountID}/campaigns/{campaignID}/mailings");
+            QueryStringBuilder query = new QueryStringBuilder($"/bulkemail/v1.0/accounts/{accountID}/campaigns/{campaignID}/mailings");
 
             if (includeTemplateHtmlBody != default) query.Add("includeTemplateHtmlBody", includeTemplateHtmlBody);
             if (includeTemplateTextBody != default) query.Add("includeTemplateTextBody", includeTemplateTextBody);
             if (includeTemplateJson != default) query.Add("includeTemplateJson", includeTemplateJson);
 
-            return await GetAsync<Mailing[]>(query, cancellationToken);
+            return await GetAsync<Mailing[]>(query, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -451,13 +438,13 @@ namespace CM.Email
         /// <returns></returns>
         public async Task<Mailing> GetMailingForCampaignAsync(Guid accountID, Guid campaignID, Guid mailingID, bool? includeTemplateHtmlBody = null, bool? includeTemplateTextBody = null, bool? includeTemplateJson = null, CancellationToken cancellationToken = default)
         {
-            QueryStringBuilder query = new QueryStringBuilder($"/v1.0/accounts/{accountID}/campaigns/{campaignID}/mailings/{mailingID}");
+            QueryStringBuilder query = new QueryStringBuilder($"/bulkemail/v1.0/accounts/{accountID}/campaigns/{campaignID}/mailings/{mailingID}");
 
             if (includeTemplateHtmlBody != default) query.Add("includeTemplateHtmlBody", includeTemplateHtmlBody);
             if (includeTemplateTextBody != default) query.Add("includeTemplateTextBody", includeTemplateTextBody);
             if (includeTemplateJson != default) query.Add("includeTemplateJson", includeTemplateJson);
 
-            return await GetAsync<Mailing>(query, cancellationToken);
+            return await GetAsync<Mailing>(query, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -470,7 +457,7 @@ namespace CM.Email
         /// <returns></returns>
         public async Task<Mailing> CreateMailingForCampaignAsync(Guid accountID, Guid campaignID, Mailing mailing, CancellationToken cancellationToken = default)
         {
-            return await PostAsync<Mailing>($"/v1.0/accounts/{accountID}/campaigns/{campaignID}/mailings", mailing, cancellationToken);
+            return await PostAsync<Mailing>($"/bulkemail/v1.0/accounts/{accountID}/campaigns/{campaignID}/mailings", mailing, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -484,7 +471,7 @@ namespace CM.Email
         /// <returns></returns>
         public async Task<Mailing> UpdateMailingForCampaignAsync(Guid accountID, Guid campaignID, Guid mailingID, Mailing mailing, CancellationToken cancellationToken = default)
         {
-            return await PutAsync<Mailing>($"/v1.0/accounts/{accountID}/campaigns/{campaignID}/mailings/{mailingID}", mailing, cancellationToken);
+            return await PutAsync<Mailing>($"/bulkemail/v1.0/accounts/{accountID}/campaigns/{campaignID}/mailings/{mailingID}", mailing, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -497,7 +484,7 @@ namespace CM.Email
         /// <returns></returns>
         public async Task DeleteMailingForCampaignAsync(Guid accountID, Guid campaignID, Guid mailingID, CancellationToken cancellationToken = default)
         {
-            await DeleteAsync($"/v1.0/accounts/{accountID}/campaigns/{campaignID}/mailings/{mailingID}", cancellationToken);
+            await DeleteAsync($"/bulkemail/v1.0/accounts/{accountID}/campaigns/{campaignID}/mailings/{mailingID}", cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -508,9 +495,9 @@ namespace CM.Email
         /// <param name="mailingID">This is the ID of the Mailing that you want to retrieve the statistics for</param>
         /// <param name="cancellationToken">An optional cancellation token to abort this request</param>
         /// <returns></returns>
-        public async Task<MailingStatistics> GetMailingStatisticsForCampaignAsync(Guid accountID, Guid campaignID, Guid mailingID, CancellationToken cancellationToken = default)
+        public async Task<MailingStatistics> GetMailingStatisticsAsync(Guid accountID, Guid campaignID, Guid mailingID, CancellationToken cancellationToken = default)
         {
-            return await GetAsync<MailingStatistics>($"/v1.0/accounts/{accountID}/campaigns/{campaignID}/mailings/{mailingID}", cancellationToken);
+            return await GetAsync<MailingStatistics>($"/bulkemail/v1.0/accounts/{accountID}/campaigns/{campaignID}/mailings/{mailingID}", cancellationToken).ConfigureAwait(false);
         }
 
         #endregion
@@ -521,12 +508,12 @@ namespace CM.Email
         /// Send a single mail without a campaign
         /// </summary>
         /// <param name="accountID">Your Account ID, used for authorization (Found in the EmailCampaigns app in the "API credentials" page in Settings)</param>
-        /// <param name="singleMail">This is the SingleMail that you want to send</param>
+        /// <param name="mail">This is the mail that you want to send</param>
         /// <param name="cancellationToken">An optional cancellation token to abort this request</param>
         /// <returns></returns>
-        public async Task<SingleMail> SendSingleMailAsync(Guid accountID, SingleMail singleMail, CancellationToken cancellationToken = default)
+        public async Task<Mail> SendMailAsync(Guid accountID, Mail mail, CancellationToken cancellationToken = default)
         {
-            return await PostAsync<SingleMail>($"/v1.0/accounts/{accountID}/mails", singleMail, cancellationToken);
+            return await PostAsync<Mail>($"/bulkemail/v1.0/accounts/{accountID}/mails", mail, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -537,9 +524,9 @@ namespace CM.Email
         /// <param name="campaignMail">This is the triggered CampaignMail that you want to send</param>
         /// <param name="cancellationToken">An optional cancellation token to abort this request</param>
         /// <returns></returns>
-        public async Task<CampaignMail> SendTriggeredCampaignMailAsync(Guid accountID, Guid campaignID, CampaignMail campaignMail, CancellationToken cancellationToken = default)
+        public async Task<CampaignMail> SendCampaignMailAsync(Guid accountID, Guid campaignID, CampaignMail campaignMail, CancellationToken cancellationToken = default)
         {
-            return await PostAsync<CampaignMail>($"/v1.0/accounts/{accountID}/campaigns/{campaignID}/mails", campaignMail, cancellationToken);
+            return await PostAsync<CampaignMail>($"/bulkemail/v1.0/accounts/{accountID}/campaigns/{campaignID}/mails", campaignMail, cancellationToken).ConfigureAwait(false);
         }
 
         #endregion
@@ -557,13 +544,13 @@ namespace CM.Email
         /// <returns></returns>
         public async Task<Paginated<Unsubscription>> GetUnsubscriptionsAsync(Guid accountID, int? skip = null, int? take = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            QueryStringBuilder query = new QueryStringBuilder($"/v1.0/accounts/{accountID}/unsubscriptions");
+            QueryStringBuilder query = new QueryStringBuilder($"/bulkemail/v1.0/accounts/{accountID}/unsubscriptions");
 
             if (skip != default) query.Add("skip", skip);
             if (take != default) query.Add("take", take);
             if (filter != default) query.Add("filter", filter);
 
-            return await GetPaginatedAsync<Unsubscription>(query, cancellationToken);
+            return await GetPaginatedAsync<Unsubscription>(query, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -575,11 +562,11 @@ namespace CM.Email
         /// <returns></returns>
         public async Task<Unsubscription> CreateUnsubscriptionAsync(Guid accountID, Unsubscription unsubscription, CancellationToken cancellationToken = default)
         {
-            return await PostAsync<Unsubscription>($"/v1.0/accounts/{accountID}/unsubscriptions", unsubscription, cancellationToken);
+            return await PostAsync<Unsubscription>($"/bulkemail/v1.0/accounts/{accountID}/unsubscriptions", unsubscription, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Delete a unsubscription
+        /// Delete an unsubscription
         /// </summary>
         /// <param name="accountID">Your Account ID, used for authorization (Found in the EmailCampaigns app in the "API credentials" page in Settings)</param>
         /// <param name="unsubscriptionID">This is the ID of the Unsubscription that you want to delete</param>
@@ -587,7 +574,7 @@ namespace CM.Email
         /// <returns></returns>
         public async Task DeleteUnsubscriptionAsync(Guid accountID, Guid unsubscriptionID, CancellationToken cancellationToken = default)
         {
-            await DeleteAsync($"/v1.0/accounts/{accountID}/unsubscriptions/{unsubscriptionID}", cancellationToken);
+            await DeleteAsync($"/bulkemail/v1.0/accounts/{accountID}/unsubscriptions/{unsubscriptionID}", cancellationToken).ConfigureAwait(false);
         }
 
         #endregion
@@ -598,11 +585,18 @@ namespace CM.Email
         /// Get all campaign tags
         /// </summary>
         /// <param name="accountID">Your Account ID, used for authorization (Found in the EmailCampaigns app in the "API credentials" page in Settings)</param>
+        /// <param name="skip">The amount of entities to skip from the result (Optional)</param>
+        /// <param name="take">The amount of entities to retrieve from the result (Optional)</param>
         /// <param name="cancellationToken">An optional cancellation token to abort this request</param>
         /// <returns></returns>
-        public async Task<Paginated<CampaignTag>> GetCampaignTagsAsync(Guid accountID, CancellationToken cancellationToken = default)
+        public async Task<Paginated<CampaignTag>> GetCampaignTagsAsync(Guid accountID, int? skip = null, int? take = null, CancellationToken cancellationToken = default)
         {
-            return await GetPaginatedAsync<CampaignTag>($"/v1.0/accounts/{accountID}/campaigntags", cancellationToken);
+            QueryStringBuilder query = new QueryStringBuilder($"/bulkemail/v1.0/accounts/{accountID}/campaigntags");
+
+            if (skip != default) query.Add("skip", skip);
+            if (take != default) query.Add("take", take);
+
+            return await GetPaginatedAsync<CampaignTag>(query, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -614,7 +608,7 @@ namespace CM.Email
         /// <returns></returns>
         public async Task<CampaignTag> GetCampaignTagAsync(Guid accountID, Guid campaignTagID, CancellationToken cancellationToken = default)
         {
-            return await GetAsync<CampaignTag>($"/v1.0/accounts/{accountID}/campaignTags/{campaignTagID}", cancellationToken);
+            return await GetAsync<CampaignTag>($"/bulkemail/v1.0/accounts/{accountID}/campaigntags/{campaignTagID}", cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -626,7 +620,7 @@ namespace CM.Email
         /// <returns></returns>
         public async Task<CampaignTag> CreateCampaignTagAsync(Guid accountID, CampaignTag campaignTag, CancellationToken cancellationToken = default)
         {
-            return await PostAsync<CampaignTag>($"/v1.0/accounts/{accountID}/campaignTags", campaignTag, cancellationToken);
+            return await PostAsync<CampaignTag>($"/bulkemail/v1.0/accounts/{accountID}/campaigntags", campaignTag, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -639,7 +633,7 @@ namespace CM.Email
         /// <returns></returns>
         public async Task<CampaignTag> UpdateCampaignTagAsync(Guid accountID, Guid campaignTagID, CampaignTag campaignTag, CancellationToken cancellationToken = default)
         {
-            return await PutAsync<CampaignTag>($"/v1.0/accounts/{accountID}/campaigntags/{campaignTagID}", campaignTag, cancellationToken);
+            return await PutAsync<CampaignTag>($"/bulkemail/v1.0/accounts/{accountID}/campaigntags/{campaignTagID}", campaignTag, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -651,7 +645,7 @@ namespace CM.Email
         /// <returns></returns>
         public async Task DeleteCampaignTagAsync(Guid accountID, Guid campaignTagID, CancellationToken cancellationToken = default)
         {
-            await DeleteAsync($"/v1.0/accounts/{accountID}/campaigntags/{campaignTagID}", cancellationToken);
+            await DeleteAsync($"/bulkemail/v1.0/accounts/{accountID}/campaigntags/{campaignTagID}", cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -664,7 +658,7 @@ namespace CM.Email
         /// <returns></returns>
         public async Task AddCampaignTagToCampaignAsync(Guid accountID, Guid campaignID, Guid campaignTagID, CancellationToken cancellationToken = default)
         {
-            await PostAsync($"/v1.0/accounts/{accountID}/campaigns/{campaignID}/campaigntags/{campaignTagID}", null, cancellationToken);
+            await PostAsync($"/bulkemail/v1.0/accounts/{accountID}/campaigns/{campaignID}/campaigntags/{campaignTagID}", null, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -677,7 +671,7 @@ namespace CM.Email
         /// <returns></returns>
         public async Task RemoveCampaignTagFromCampaignAsync(Guid accountID, Guid campaignID, Guid campaignTagID, CancellationToken cancellationToken = default)
         {
-            await DeleteAsync($"/v1.0/accounts/{accountID}/campaigns/{campaignID}/campaigntags/{campaignTagID}", cancellationToken);
+            await DeleteAsync($"/bulkemail/v1.0/accounts/{accountID}/campaigns/{campaignID}/campaigntags/{campaignTagID}", cancellationToken).ConfigureAwait(false);
         }
 
         #endregion
@@ -692,7 +686,7 @@ namespace CM.Email
         /// <returns></returns>
         public async Task<Webhook> GetWebhookAsync(Guid accountID, CancellationToken cancellationToken = default)
         {
-            return await GetAsync<Webhook>($"/v1.0/accounts/{accountID}/webhooks", cancellationToken);
+            return await GetAsync<Webhook>($"/bulkemail/v1.0/accounts/{accountID}/webhooks", cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -704,7 +698,7 @@ namespace CM.Email
         /// <returns></returns>
         public async Task<Webhook> SetWebhookAsync(Guid accountID, Webhook webhook, CancellationToken cancellationToken = default)
         {
-            return await PutAsync<Webhook>($"/v1.0/accounts/{accountID}/webhooks", webhook, cancellationToken);
+            return await PutAsync<Webhook>($"/bulkemail/v1.0/accounts/{accountID}/webhooks", webhook, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -715,245 +709,9 @@ namespace CM.Email
         /// <returns></returns>
         public async Task DeleteWebhookAsync(Guid accountID, CancellationToken cancellationToken = default)
         {
-            await DeleteAsync($"/v1.0/accounts/{accountID}/webhooks", cancellationToken);
+            await DeleteAsync($"/bulkemail/v1.0/accounts/{accountID}/webhooks", cancellationToken).ConfigureAwait(false);
         }
 
-        #endregion
-
-        #region Client functions
-
-        #region Get functions
-
-        /// <summary>
-        /// Performs a REST GET request
-        /// </summary>
-        /// <typeparam name="T">The expected response type</typeparam>
-        /// <param name="url">The url extension for the endpoint</param>
-        /// <param name="cancellationToken">An optional cancellation token to abort this request</param>
-        /// <returns></returns>
-        private async Task<T> GetAsync<T>([NotNull] string url, CancellationToken cancellationToken)
-        {
-            using (var request = new HttpRequestMessage(HttpMethod.Get, $"{_baseUrl}{url}"))
-            {
-                AddDefaultRequestHeaders(request);
-
-                var response = await _httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
-                await EnsureSuccessStatusCodeAsync(response).ConfigureAwait(false);
-
-                string json = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-
-                if (string.IsNullOrWhiteSpace(json))
-                    return default;
-
-                return JsonConvert.DeserializeObject<T>(json);
-            }
-        }
-
-        /// <summary>
-        /// Performs a REST GET request returning a paginated result
-        /// </summary>
-        /// <typeparam name="T">The expected response type</typeparam>
-        /// <param name="url">The url extension for the endpoint</param>
-        /// <param name="cancellationToken">An optional cancellation token to abort this request</param>
-        /// <returns></returns>
-        private async Task<Paginated<T>> GetPaginatedAsync<T>([NotNull] string url, CancellationToken cancellationToken)
-        {
-            using (var request = new HttpRequestMessage(HttpMethod.Get, $"{_baseUrl}{url}"))
-            {
-                AddDefaultRequestHeaders(request);
-
-                var response = await _httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
-                await EnsureSuccessStatusCodeAsync(response).ConfigureAwait(false);
-
-                string json = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-
-                if (string.IsNullOrWhiteSpace(json))
-                    return null;
-
-                var items = JsonConvert.DeserializeObject<T[]>(json);
-
-                int.TryParse(response.Headers.GetValues("X-CM-PAGINATION-SKIP").FirstOrDefault(), out var skip);
-                int.TryParse(response.Headers.GetValues("X-CM-PAGINATION-TAKE").FirstOrDefault(), out var take);
-                int.TryParse(response.Headers.GetValues("X-CM-PAGINATION-TOTAL").FirstOrDefault(), out var total);
-
-                return new Paginated<T>(items, skip, take, total);
-            }
-        }
-
-        #endregion
-
-        #region Post functions
-
-        /// <summary>
-        /// Performs a REST POST request
-        /// </summary>
-        /// <param name="url">The url extension for the endpoint</param>
-        /// <param name="data">The object that will be send with your request</param>
-        /// <param name="cancellationToken">An optional cancellation token to abort this request</param>
-        /// <returns></returns>
-        private async Task PostAsync([NotNull] string url, [CanBeNull] object data, CancellationToken cancellationToken)
-        {
-            await PostAsync<object>(url, data, cancellationToken);
-        }
-
-        /// <summary>
-        /// Performs a REST POST request.
-        /// </summary>
-        /// <typeparam name="T">The entity type you are expecting back from the request</typeparam>
-        /// <param name="url">The url extension for the endpoint</param>
-        /// <param name="data">The object that will be send with your request</param>
-        /// <param name="cancellationToken">An optional cancellation token to abort this request</param>
-        /// <returns>The returned response</returns>
-        private async Task<T> PostAsync<T>([NotNull] string url, [CanBeNull] object data, CancellationToken cancellationToken)
-        {
-            using (var request = new HttpRequestMessage(HttpMethod.Post, $"{_baseUrl}{url}"))
-            {
-                AddDefaultRequestHeaders(request);
-                request.Content = data != null ? new StringContent(JsonConvert.SerializeObject(data), encoding, jsonMediaType) : null;
-
-                var response = await _httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
-                await EnsureSuccessStatusCodeAsync(response).ConfigureAwait(false);
-
-                string json = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-
-                if (string.IsNullOrWhiteSpace(json))
-                    return default;
-
-                return JsonConvert.DeserializeObject<T>(json);
-            }
-        }
-
-        #endregion
-
-        #region Put functions
-
-        /// <summary>
-        /// Performs a REST PUT request
-        /// </summary>
-        /// <param name="url">The url extension for the endpoint</param>
-        /// <param name="data">The object that will be send with your request</param>
-        /// <param name="cancellationToken">An optional cancellation token to abort this request</param>
-        /// <returns></returns>
-        private async Task PutAsync([NotNull] string url, [CanBeNull] object data, CancellationToken cancellationToken)
-        {
-            await PutAsync<object>(url, data, cancellationToken);
-        }
-
-        /// <summary>
-        /// Performs a REST PUT request
-        /// </summary>
-        /// <typeparam name="T">The expected response type</typeparam>
-        /// <param name="url">The url extension for the endpoint</param>
-        /// <param name="data">The object that will be send with your request</param>
-        /// <param name="cancellationToken">An optional cancellation token to abort this request</param>
-        /// <returns>The returned response</returns>
-        private async Task<T> PutAsync<T>([NotNull] string url, [CanBeNull] object data, CancellationToken cancellationToken)
-        {
-            using (var request = new HttpRequestMessage(HttpMethod.Put, $"{_baseUrl}{url}"))
-            {
-                AddDefaultRequestHeaders(request);
-                request.Content = data != null ? new StringContent(JsonConvert.SerializeObject(data), encoding, jsonMediaType) : null;
-
-                var response = await _httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
-                await EnsureSuccessStatusCodeAsync(response).ConfigureAwait(false);
-
-                string json = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-
-                if (string.IsNullOrWhiteSpace(json))
-                    return default;
-
-                return JsonConvert.DeserializeObject<T>(json);
-            }
-        }
-
-        #endregion
-
-        #region Delete functions
-
-        /// <summary>
-        /// Performs a REST DELETE request
-        /// </summary>
-        /// <param name="url">The url extension for the endpoint</param>
-        /// <param name="cancellationToken">An optional cancellation token to abort this request</param>
-        /// <returns></returns>
-        private async Task DeleteAsync([NotNull] string url, CancellationToken cancellationToken)
-        {
-            await DeleteAsync<object>(url, cancellationToken);
-        }
-
-        /// <summary>
-        /// Performs a REST DELETE request
-        /// </summary>
-        /// <typeparam name="T">The expected response type</typeparam>
-        /// <param name="url">The url extension for the endpoint</param>
-        /// <param name="cancellationToken">An optional cancellation token to abort this request</param>
-        /// <returns></returns>
-        private async Task<T> DeleteAsync<T>([NotNull] string url, CancellationToken cancellationToken)
-        {
-            using (var request = new HttpRequestMessage(HttpMethod.Delete, $"{_baseUrl}{url}"))
-            {
-                AddDefaultRequestHeaders(request);
-
-                var response = await _httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
-                await EnsureSuccessStatusCodeAsync(response).ConfigureAwait(false);
-
-                string json = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-
-                if (string.IsNullOrWhiteSpace(json))
-                    return default;
-
-                return JsonConvert.DeserializeObject<T>(json);
-            }
-        }
-
-        #endregion
-
-        #region Other client functions
-
-        private void AddDefaultRequestHeaders(HttpRequestMessage request)
-        {
-            request.Headers.Add(apiKeyHeader, _apiKey.ToString());
-        }
-
-        private async Task EnsureSuccessStatusCodeAsync(HttpResponseMessage response)
-        {
-            if (response.IsSuccessStatusCode)
-                return;
-
-            string content = string.Empty;
-            var originalMessage = new
-            {
-                Message = (string)null,
-                MessageCode = (string)null,
-                MessageDetail = (string)null
-            };
-
-            if (response.Content != null)
-            {
-                content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                response.Content.Dispose();
-
-                try
-                {
-                    // Try to deserialize the message to get the original message, message code and message detail, this only works for exceptions that are mapped
-                    originalMessage = JsonConvert.DeserializeAnonymousType(content, originalMessage);
-                }
-                catch (Exception) { 
-                    // Don't do anything, no need for it!
-                }
-            }
-
-            throw new ApiResponseException(
-                response.StatusCode,
-                content,
-                originalMessage.Message,
-                originalMessage.MessageCode,
-                originalMessage.MessageDetail
-            );
-        }
-
-        #endregion
-
-        #endregion
+        #endregion      
     }
 }

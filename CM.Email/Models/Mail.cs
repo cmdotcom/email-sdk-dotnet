@@ -2,7 +2,7 @@
 
 namespace CM.Email.Models
 {
-    public class SingleMail
+    public class Mail
     {
         /// <summary>
         /// The ID of the mail
