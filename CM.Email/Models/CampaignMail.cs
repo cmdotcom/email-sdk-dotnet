@@ -25,6 +25,11 @@ namespace CM.Email.Models
         public string ToAddress { get; set; }
 
         /// <summary>
+        /// The name of the person to send your mail to
+        /// </summary>
+        public string ToName { get; set; }
+
+        /// <summary>
         /// The custom values you want to use inside you triggered campaign
         /// </summary>
         public CustomValue[] CustomValues { get; set; }

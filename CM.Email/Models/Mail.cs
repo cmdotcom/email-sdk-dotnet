@@ -35,6 +35,11 @@ namespace CM.Email.Models
         public string ToAddress { get; set; }
 
         /// <summary>
+        /// The name of the person to send your mail to
+        /// </summary>
+        public string ToName { get; set; }
+
+        /// <summary>
         /// The Ccs for this mail. An array of email addresses needs to be passed. See the email address object definition. Keep in mind that every cc will count as an additional mail. When you have a cc it's impossible to know wheter the recipient or the person in the cc opened or clicked the mail
         /// </summary>
         public MailAddress[] Ccs { get; set; }
