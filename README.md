@@ -44,7 +44,7 @@ Mail mail = new Mail()
   TextBody = "What a beautifull email",
   Attachments = new Attachment[]
   {
-    new Attachment[] 
+    new Attachment 
       {
         FileName = attachmentFileName,
         Content = attachmentContent, // base64 encoded content of the attachment
@@ -54,7 +54,7 @@ Mail mail = new Mail()
   CustomerReference = yourOwnReference //optional
 };
   
-Mail sendMail = await emailClient.SendSingleMailAsync(accountID, mail).ConfigureAwait(false);
+Mail sendMail = await emailClient.SendMailAsync(accountID, mail).ConfigureAwait(false);
 ```
 
 ## Send a triggered campaign mail
