@@ -1,8 +1,8 @@
 # EmailCampaignsAPI SDK
-.NET Standard SDK to send email with the CM EmailCampaignsAPI
+.NET Standard SDK to send email with the CM EmailCampaigns API
 
 ## API Documentation
-https://docs.cmtelecom.com/en/api/email-campaigns/1.0/index
+https://docs.cmtelecom.com/en/api/email-campaigns
 
 # Usage
 
@@ -14,21 +14,20 @@ EmailClient emailClient = new EmailClient(httpClient, myApiKey, baseUrl);
 ```
 
 `httpClient` is requested as a parameter, such that you can use a single instance throughout your application, as is highly recommended.
-Ideally you would have it injected by Dependency Injection.
 
 `myApiKey` is your unique api key (or product token) which authorizes you on the CM platform. Always keep this key secret!
 
-`baseUrl` is potional and will be defaulted to https://api.cmtelecom.com when not filled in. Else the requests will be send to the filled in domain.
+`baseUrl` is optional and will be defaulted to https://api.cmtelecom.com when not filled in. Else the requests will be send to the filled in domain.
 
 ## Send an mail
 
-You can send a single mail by calling the `SendMailAsync` method and providing your accountID (found in the API credentials in the EmailCampaigns settings), the Mail object and a cancellation token (optional).
+You can send a mail by calling the `SendMailAsync` method and providing your accountID (found in the API credentials under settings in the Email Campaigns app), the Mail object and a cancellation token (optional).
 
 ```cs
 Mail mail = new Mail()
 {
   FromAddressID = fromAddressID,
-  FromName = fromName,
+  FromName = fromName, //optional
   ReplyToAddressID = replyToAddressID, // optional
   ToAddress = toAddress,
   ToName = toName, // optional
@@ -52,25 +51,26 @@ Mail mail = new Mail()
         ContentID = attachmentContentID // The ContentID can be specified for images, to reference it in your image tag in your HTML. You can use "cid:yourcontentid" in the src tag of the image to display the image inline.
       }
   }, // optional
-  CustomerReference = yourOwnReference
+  CustomerReference = yourOwnReference //optional
 };
   
-Mail sendMail = await emailClient.SendSingleMailAsync(accountID, mail);
+Mail sendMail = await emailClient.SendSingleMailAsync(accountID, mail).ConfigureAwait(false);
 ```
 
 ## Send a triggered campaign mail
 
-You can send a triggered mail by calling the `SendTriggeredCampaignMailAsync` method and prividing your accountID (found in the API credentials in the EmailCampaigns settings), the triggerdCampaignID over which you want to send the mail, the CampaignMail object (with a ToAddress and custom values) and a cancellation token (optional).
+You can send a triggered mail by calling the `SendCampaignMailAsync` method and providing your accountID (found in the API credentials under settings in the Email Campaigns app), the triggerdCampaignID over which you want to send the mail, the CampaignMail object (with a ToAddress and custom values) and a cancellation token (optional).
 
 ```cs
 CampaignMail campaignMail = new CampaignMail()
 {
   ToAddress = "recipientsEmailAddress",
+  ToName = toName, //optional
   CustomValues = new CustomValue[]
   {
     new CustomValue() { Field = "Firstname", Value = "recipientsFirstname" }
   }
 };
 
-CampaignMail sendCampaignMail await emailClient.SendTriggeredCampaignMailAsync(accountID, triggerdCampaignID, campaignMail);
+CampaignMail sendCampaignMail = await emailClient.SendCampaignMailAsync(accountID, triggerdCampaignID, campaignMail).ConfigureAwait(false);
 ```
