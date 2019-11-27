@@ -74,3 +74,6 @@ CampaignMail campaignMail = new CampaignMail()
 
 CampaignMail sendCampaignMail = await emailClient.SendCampaignMailAsync(accountID, triggerdCampaignID, campaignMail).ConfigureAwait(false);
 ```
+
+## Other requests
+The send mail requests are explained in a bit more detail above because those are the most used methods, but no worries, all other implemented requests are working in a similar way and should be easy to use. 
