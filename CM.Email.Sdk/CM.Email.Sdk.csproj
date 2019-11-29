@@ -2,15 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Authors>JvS</Authors>
+    <Authors>CM EmailCampaigns</Authors>
     <Version>1.0.0</Version>
     <Description>SDK for use with the CM EmailCampaigns API.</Description>
     <PackageProjectUrl>https://https://github.com/cmdotcom/email-sdk-dotnet</PackageProjectUrl>
     <Company>CM.com</Company>
     <PackageIconUrl>http://cdn.cmtelecom.com/images/cm-nuget.png</PackageIconUrl>
     <RepositoryUrl>https://https://github.com/cmdotcom/email-sdk-dotnet</RepositoryUrl>
-    <RepositoryType>Github</RepositoryType>
-    <PackageTags>SDK, CM, EmailCampaignsAPI</PackageTags>
+    <RepositoryType>GitHub</RepositoryType>
+    <PackageTags>CM, EmailCampaigns, Email, API, SDK</PackageTags>
     <Copyright>2019 CM.com</Copyright>
     <PackageLicenseUrl>https://github.com/cmdotcom/email-sdk-dotnet/blob/master/LICENSE.md</PackageLicenseUrl>
     <PackageReleaseNotes>First version with support for sending (triggered) emails and all other available API endpoints in CM's EmailCampaigns</PackageReleaseNotes>
