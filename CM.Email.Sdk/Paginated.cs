@@ -1,4 +1,4 @@
-﻿namespace CM.Email
+﻿namespace CM.Email.Sdk
 {
     /// <summary>
     /// Container for a paginated result set

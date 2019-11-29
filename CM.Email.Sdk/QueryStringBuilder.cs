@@ -6,7 +6,7 @@ using System.Linq;
 using System.Web;
 using JetBrains.Annotations;
 
-namespace CM.Email
+namespace CM.Email.Sdk
 {
     /// <summary>
     /// Helper class to compose a url with optional query string parameters.

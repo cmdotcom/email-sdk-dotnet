@@ -1,4 +1,4 @@
-﻿namespace CM.Email.Models
+﻿namespace CM.Email.Sdk.Models
 {
     /// <summary>
     /// The states a campaign can be in when created in EmailCampaigns

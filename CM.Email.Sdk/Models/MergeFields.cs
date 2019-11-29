@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CM.Email.Models
+namespace CM.Email.Sdk.Models
 {
     public class MergeFields
     {
