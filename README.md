@@ -19,7 +19,7 @@ EmailClient emailClient = new EmailClient(httpClient, myApiKey, baseUrl);
 
 `baseUrl` is optional and will be defaulted to https://api.cmtelecom.com when not filled in. Else the requests will be send to the filled in domain.
 
-## Send an mail
+## Send an email
 
 You can send a mail by calling the `SendMailAsync` method and providing your accountID (found in the API credentials under settings in the Email Campaigns app), the Mail object and a cancellation token (optional).
 
