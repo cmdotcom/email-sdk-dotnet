@@ -13,7 +13,7 @@
     <PackageTags>SDK, CM, EmailCampaignsAPI</PackageTags>
     <Copyright>2019 CM.com</Copyright>
     <PackageLicenseUrl>https://github.com/cmdotcom/email-sdk-dotnet/blob/master/LICENSE.md</PackageLicenseUrl>
-    <PackageReleaseNotes>First version with support for sending emails and all other available API endpoints.</PackageReleaseNotes>
+    <PackageReleaseNotes>First version with support for sending emails and all other available API endpoints in CM's EmailCampaigns.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
