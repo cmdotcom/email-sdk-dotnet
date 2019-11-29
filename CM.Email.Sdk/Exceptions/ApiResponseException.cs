@@ -2,7 +2,7 @@
 using System.Net;
 using System.Runtime.Serialization;
 
-namespace CM.Email.Exceptions
+namespace CM.Email.Sdk.Exceptions
 {
     public class ApiResponseException : Exception
     {

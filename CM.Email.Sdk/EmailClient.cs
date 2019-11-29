@@ -1,11 +1,11 @@
-﻿using CM.Email.Models;
+﻿using CM.Email.Sdk.Models;
 using JetBrains.Annotations;
 using System;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CM.Email
+namespace CM.Email.Sdk
 {
     /// <summary>
     /// This client provides all endpoint methods to communicate with the EmailCampaigns API

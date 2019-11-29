@@ -1,4 +1,4 @@
-﻿namespace CM.Email.Models
+﻿namespace CM.Email.Sdk.Models
 {
     public class CampaignStatistic
     {

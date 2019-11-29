@@ -1,4 +1,4 @@
-﻿using CM.Email.Exceptions;
+﻿using CM.Email.Sdk.Exceptions;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 using System;
@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CM.Email
+namespace CM.Email.Sdk
 {
     public abstract class BaseClient
     {
