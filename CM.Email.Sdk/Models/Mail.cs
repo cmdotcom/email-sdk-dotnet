@@ -30,6 +30,16 @@ namespace CM.Email.Sdk.Models
         public Guid? ReplyToAddressID { get; set; }
 
         /// <summary>
+        /// The address to send a reply mail to
+        /// </summary>
+        public string ReplyToAddress { get; set; }
+
+        /// <summary>
+        /// The name of the person to send a reply mail to
+        /// </summary>
+        public string ReplyToName { get; set; }
+
+        /// <summary>
         /// The address to send your mail to
         /// </summary>
         public string ToAddress { get; set; }
