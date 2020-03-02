@@ -64,7 +64,7 @@ You can send a triggered mail by calling the `SendCampaignMailAsync` method and 
 ```cs
 CampaignMail campaignMail = new CampaignMail()
 {
-  ToAddress = "recipientsEmailAddress",
+  ToAddress = recipientsEmailAddress,
   ToName = toName, //optional
   CustomValues = new CustomValue[]
   {
