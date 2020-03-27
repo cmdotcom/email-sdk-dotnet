@@ -32,16 +32,16 @@ namespace CM.Email.Sdk.Models
         /// <summary>
         /// When the from domain was created
         /// </summary>
-        public DateTime Createdon { get; set; }
+        public DateTime CreatedOnUtc { get; set; }
 
         /// <summary>
         /// When the from domain was modified
         /// </summary>
-        public DateTime ModifiedOn { get; set; }
+        public DateTime ModifiedOnUtc { get; set; }
 
         /// <summary>
         /// When the from domain was deleted
         /// </summary>
-        public DateTime? DeletedOn { get; set; }
+        public DateTime? DeletedOnUtc { get; set; }
     }
 }
