@@ -87,11 +87,11 @@ namespace CM.Email.Sdk.Models
         /// <summary>
         /// When the mail was created
         /// </summary>
-        public DateTime CreatedOn { get; set; }
+        public DateTime CreatedOnUtc { get; set; }
 
         /// <summary>
         /// When the mail was last modified
         /// </summary>
-        public DateTime ModifiedOn { get; set; }
+        public DateTime ModifiedOnUtc { get; set; }
     }
 }

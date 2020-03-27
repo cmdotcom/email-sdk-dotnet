@@ -27,16 +27,16 @@ namespace CM.Email.Sdk.Models
         /// <summary>
         /// When the address was created
         /// </summary>
-        public DateTime CreatedOn { get; set; }
+        public DateTime CreatedOnUtc { get; set; }
 
         /// <summary>
         /// When the address was last modified
         /// </summary>
-        public DateTime ModifiedOn { get; set; }
+        public DateTime ModifiedOnUtc { get; set; }
 
         /// <summary>
         /// When the address was deleted
         /// </summary>
-        public DateTime? DeletedOn { get; set; }
+        public DateTime? DeletedOnUtc { get; set; }
     }
 }

@@ -37,7 +37,7 @@ namespace CM.Email.Sdk.Models
         /// <summary>
         /// The datetime to schedule this campaign. This datetime is currently in the dutch timezone. Leave null if you want to send a campaign right away
         /// </summary>
-        public DateTime? ScheduledOn { get; set; }
+        public DateTime? ScheduledOnUtc { get; set; }
 
         /// <summary>
         /// The test percentage multiplier to use for your AB test newletter. This should be at least 0.10 (10%) or higher. Leave null if you want to send a newsletter or triggered campaign
@@ -57,7 +57,7 @@ namespace CM.Email.Sdk.Models
         /// <summary>
         /// The datetime to calculate the winning mailing and send it. This value is calculated automatically. This datetime is currently in the dutch timezone
         /// </summary>
-        public DateTime? SendToRemainingOn { get; set; }
+        public DateTime? SendToRemainingOnUtc { get; set; }
 
         /// <summary>
         /// The ID of the best performing mailing based on the TestDuration and TestMetricType. This value will be filled when the campaign has the PickedUpByFinisher state
@@ -77,16 +77,16 @@ namespace CM.Email.Sdk.Models
         /// <summary>
         /// When the campaign was created
         /// </summary>
-        public DateTime CreatedOn { get; set; }
+        public DateTime CreatedOnUtc { get; set; }
 
         /// <summary>
         /// When the campaign was last modified
         /// </summary>
-        public DateTime ModifiedOn { get; set; }
+        public DateTime ModifiedOnUtc { get; set; }
 
         /// <summary>
         /// When the campaign was deleted
         /// </summary>
-        public DateTime? DeletedOn { get; set; }
+        public DateTime? DeletedOnUtc { get; set; }
     }
 }
