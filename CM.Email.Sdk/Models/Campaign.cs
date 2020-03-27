@@ -57,7 +57,7 @@ namespace CM.Email.Sdk.Models
         /// <summary>
         /// The datetime to calculate the winning mailing and send it. This value is calculated automatically. This datetime is currently in the dutch timezone
         /// </summary>
-        public DateTime? SendToRemainingOn { get; set; }
+        public DateTime? SendToRemainingOnUtc { get; set; }
 
         /// <summary>
         /// The ID of the best performing mailing based on the TestDuration and TestMetricType. This value will be filled when the campaign has the PickedUpByFinisher state
