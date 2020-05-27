@@ -75,6 +75,11 @@ namespace CM.Email.Sdk.Models
         public CampaignTag[] CampaignTags { get; set; }
 
         /// <summary>
+        /// The Google Analytics tracking settings for this campaign
+        /// </summary>
+        public GoogleAnalyticsTracking GoogleAnalyticsTracking { get; set; }
+
+        /// <summary>
         /// When the campaign was created
         /// </summary>
         public DateTime CreatedOnUtc { get; set; }

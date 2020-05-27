@@ -19,7 +19,7 @@ namespace CM.Email.Sdk
         /// <param name="httpClient">The HttpClient to use for sending the instruction. You should use this as a singleton for your entire application</param>
         /// <param name="apiKey">Your Product token, used for authentication (Found in the EmailCampaigns app in the "API credentials" page in Settings</param>
         /// <param name="baseUrl">The base URL of the CM Email Campaigns API (Optional)</param>
-        public EmailClient(HttpClient httpClient, Guid apiKey, string baseUrl = "https://api.cmtelecom.com") : base(httpClient, apiKey, baseUrl) { }
+        public EmailClient(HttpClient httpClient, Guid apiKey, string baseUrl = "https://api.cm.com") : base(httpClient, apiKey, baseUrl) { }
 
         #region From domains
 
@@ -31,12 +31,13 @@ namespace CM.Email.Sdk
         /// <param name="take">The amount of entities to retrieve from the result (Optional)</param>
         /// <param name="cancellationToken">An optional cancellation token to abort this request</param>
         /// <returns></returns>
-        public async Task<Paginated<FromDomain>> GetFromDomainsAsync(Guid accountID, int? skip = null, int? take = null, CancellationToken cancellationToken = default)
+        public async Task<Paginated<FromDomain>> GetFromDomainsAsync(Guid accountID, int? skip = null, int? take = null, string filter = null, CancellationToken cancellationToken = default)
         {
             QueryStringBuilder query = new QueryStringBuilder($"/bulkemail/v1.0/accounts/{accountID}/fromdomains");
 
             if (skip != default) query.Add("skip", skip);
             if (take != default) query.Add("take", take);
+            if (filter != default) query.Add("filter", filter);
 
             return await GetPaginatedAsync<FromDomain>(query, cancellationToken).ConfigureAwait(false);
         }
@@ -101,12 +102,13 @@ namespace CM.Email.Sdk
         /// <param name="take">The amount of entities to retrieve from the result (Optional)</param>
         /// <param name="cancellationToken">An optional cancellation token to abort this request</param>
         /// <returns></returns>
-        public async Task<Paginated<FromAddress>> GetFromAddressesAsync(Guid accountID, int? skip = null, int? take = null, CancellationToken cancellationToken = default)
+        public async Task<Paginated<FromAddress>> GetFromAddressesAsync(Guid accountID, int? skip = null, int? take = null, string filter = null, CancellationToken cancellationToken = default)
         {
             QueryStringBuilder query = new QueryStringBuilder($"/bulkemail/v1.0/accounts/{accountID}/fromaddresses");
 
             if (skip != default) query.Add("skip", skip);
             if (take != default) query.Add("take", take);
+            if (filter != default) query.Add("filter", filter);
 
             return await GetPaginatedAsync<FromAddress>(query, cancellationToken).ConfigureAwait(false);
         }
@@ -261,7 +263,7 @@ namespace CM.Email.Sdk
         /// <param name="campaignTypeID">This is the ID of the CampaignType that you want filter the campaigns on</param>
         /// <param name="cancellationToken">An optional cancellation token to abort this request</param>
         /// <returns></returns>
-        public async Task<Paginated<Campaign>> GetCampaignsAsync(Guid accountID, int? skip = null, int? take = null, string filter = null, string campaignTypeID = null, string[] campaignTags = null, CancellationToken cancellationToken = default)
+        public async Task<Paginated<Campaign>> GetCampaignsAsync(Guid accountID, int? skip = null, int? take = null, string filter = null, string campaignTypeID = null, bool? includePreviewHtmlBody = null, string[] campaignTags = null, CancellationToken cancellationToken = default)
         {
             QueryStringBuilder query = new QueryStringBuilder($"/bulkemail/v1.0/accounts/{accountID}/campaigns");
             
@@ -269,6 +271,7 @@ namespace CM.Email.Sdk
             if (take != default) query.Add("take", take);
             if (filter != default) query.Add("filter", filter);
             if (campaignTypeID != default) query.Add("campaignTypeID", campaignTypeID);
+            if (includePreviewHtmlBody != default) query.Add("includePreviewHtmlBody", includePreviewHtmlBody);
             if (campaignTags != default(string[])) query.AddRange("campaignTags", campaignTags);
 
             return await GetPaginatedAsync<Campaign>(query, cancellationToken).ConfigureAwait(false);
@@ -281,9 +284,13 @@ namespace CM.Email.Sdk
         /// <param name="campaignID">This is the ID of the Campaign that you want to retrieve</param>
         /// <param name="cancellationToken">An optional cancellation token to abort this request</param>
         /// <returns></returns>
-        public async Task<Campaign> GetCampaignAsync(Guid accountID, Guid campaignID, CancellationToken cancellationToken = default)
+        public async Task<Campaign> GetCampaignAsync(Guid accountID, Guid campaignID, bool? includePreviewHtmlBody = null, CancellationToken cancellationToken = default)
         {
-            return await GetAsync<Campaign>($"/bulkemail/v1.0/accounts/{accountID}/campaigns/{campaignID}", cancellationToken).ConfigureAwait(false);
+            QueryStringBuilder query = new QueryStringBuilder($"/bulkemail/v1.0/accounts/{accountID}/campaigns/{campaignID}");
+
+            if (includePreviewHtmlBody != default) query.Add("includePreviewHtmlBody", includePreviewHtmlBody);
+
+            return await GetAsync<Campaign>(query, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
