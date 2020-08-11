@@ -45,6 +45,11 @@ namespace CM.Email.Sdk.Models
         public MergeFields MergeFields { get; set; }
 
         /// <summary>
+        /// The editor type of this template
+        /// </summary>
+        public TemplateEditorType TemplateEditorType { get; set; }
+
+        /// <summary>
         /// When the template was created
         /// </summary>
         public DateTime CreatedOnUtc { get; set; }
