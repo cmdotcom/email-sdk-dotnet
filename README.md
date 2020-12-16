@@ -61,7 +61,7 @@ Mail sendMail = await emailClient.SendMailAsync(accountID, mail).ConfigureAwait(
 
 ## Send a triggered campaign mail
 
-You can send a triggered mail by calling the `SendCampaignMailAsync` method and providing your accountID (found in the API credentials under settings in the Email Campaigns app), the triggerdCampaignID over which you want to send the mail, the CampaignMail object (with a ToAddress and custom values) and a cancellation token (optional).
+You can send a triggered mail by calling the `SendCampaignMailAsync` method and providing your accountID (found in the API credentials under settings in the Email Campaigns app), the triggeredCampaignID over which you want to send the mail, the CampaignMail object (with a ToAddress and custom values) and a cancellation token (optional).
 
 ```cs
 CampaignMail campaignMail = new CampaignMail()
@@ -74,7 +74,7 @@ CampaignMail campaignMail = new CampaignMail()
   }
 };
 
-CampaignMail sendCampaignMail = await emailClient.SendCampaignMailAsync(accountID, triggerdCampaignID, campaignMail).ConfigureAwait(false);
+CampaignMail sendCampaignMail = await emailClient.SendCampaignMailAsync(accountID, triggeredCampaignID, campaignMail).ConfigureAwait(false);
 ```
 
 ## Other requests
